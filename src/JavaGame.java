@@ -5,7 +5,6 @@ import java.awt.event.*;
 public class JavaGame extends JFrame implements Runnable, KeyListener, MouseListener, MouseMotionListener {
 
     private Image dbImage;
-    //private Image background;
     private Graphics dbg;
 
     Tank tank = new Tank(100,100,50);
@@ -23,55 +22,13 @@ public class JavaGame extends JFrame implements Runnable, KeyListener, MouseList
     // S is the scaling factor for the map.
     public static final int S = 32;
 
-
-    String[] mapdata =
-            {
-                    "............................................................",
-                    "............................................................",
-                    "............................................................",
-                    "............................................................",
-                    "..................AC........................................",
-                    "..................DEBBBBBC..................................",
-                    "..................DEEEEEEF..................................",
-                    "..................DEEEEEEF..................................",
-                    "..................DEEEEEEF..................................",
-                    "..................DEEEEEEF..................................",
-                    "............................................................",
-                    "........BBBBBBBBBBBBBBBBBBBBB......BBBBBBBBBBBBBBBBB.......B",
-                    "........B..................................................B",
-                    "........B..................................................B",
-                    "........B.........BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB..B",
-                    "........B...............................................B..B",
-                    "........B...............................................B..B",
-                    "........BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB.....B..B",
-                    "..................................................B.....B..B",
-                    "..................................................B.....B..B",
-                    "...BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB.....B..B",
-                    "...B....................................................B..B",
-                    "...B....................................................B..B",
-                    "...B..........BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB.B",
-                    "...B.......................................................B",
-                    "...B.......................................................B",
-                    "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ",
-            };
-
-    Image background = getImage("Resources Root/TileMap/BG.png");
-    Image[] tile;
-
-    TileMap map;
+    TileMap map = new TileMap("Resources Root/Maps/Map1.txt",S);
 
     public JavaGame() {
 
         Camera.x = 856;
         Camera.y = 512;
-        int numOfTiles = 18;
-        tile = new Image[numOfTiles];
 
-        for (int i = 0; i < numOfTiles; i++) {
-            tile[i] = getImage("Resources Root/TileMap/" + (i+1) + ".png");
-        }
-
-        map = new TileMap(mapdata,tile,background,32);
         // Game properties
         setTitle("JavaGame");
         setSize(1500,800);
@@ -86,7 +43,6 @@ public class JavaGame extends JFrame implements Runnable, KeyListener, MouseList
         addMouseListener(this);
 
         addMouseMotionListener(this);
-
     }
 
     public void inGameLoop() {
@@ -116,8 +72,6 @@ public class JavaGame extends JFrame implements Runnable, KeyListener, MouseList
             robot.applyGravity();
             Camera.applyGravity();
         }
-
-
 
         if(pressing[LT])
         {
@@ -158,6 +112,12 @@ public class JavaGame extends JFrame implements Runnable, KeyListener, MouseList
 
     public void paintComponent(Graphics g){
         map.draw(g);
+/*
+
+        for (int i = 0; i < 25; i++)
+        g.drawString(map.map[i],20,20+i*16);
+*/
+
         robot.draw(g);
         //r.draw(g);
         //soldier.draw(g);
